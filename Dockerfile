@@ -1,17 +1,12 @@
-FROM ubuntu:20.04
+FROM python:3.8-slim-buster
 
-RUN apt-get update -y
-RUN apt-get install -y python3-pip
+WORKDIR /app
 
 # We copy just the requirements.txt first to leverage Docker cache
 COPY ./requirements.txt /app/requirements.txt
-
-WORKDIR /app
 
 RUN pip3 install -r requirements.txt
 
 COPY . /app
 
-ENTRYPOINT [ "python3" ]
-
-CMD [ "-m" , "flask", "run", "--host=0.0.0.0"]
+CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0"]
